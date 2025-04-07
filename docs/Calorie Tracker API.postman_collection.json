@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "bdfa5977-6de5-4db3-bf9d-1c75343a6f01",
+		"name": "Calorie Tracker API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39937741",
+		"_collection_link": "https://glebteam.postman.co/workspace/gleb_team-Workspace~e671f400-36f1-4a56-8da1-327f90fe700a/collection/39937741-bdfa5977-6de5-4db3-bf9d-1c75343a6f01?action=share&source=collection_link&creator=39937741"
+	},
+	"item": [
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"age\": 30,\n    \"weight\": 70.5,\n    \"height\": 175.0,\n    \"goal\": \"MAINTENANCE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/users",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				},
+				"description": "Создает нового пользователя с указанными параметрами. На основе возраста, веса, роста и цели рассчитывается дневная норма калорий по формуле Харриса-Бенедикта.\n\n  \nОжидаемый ответ: объект пользователя с сгенерированным ID и рассчитанной нормой калорий.\n\n  \nСтатус: 200 OK при успехе, 400 Bad Request при некорректных данных или дубликате email."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Dish - Chicken Salad",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Chicken Salad\",\n    \"calories\": 350.0,\n    \"proteins\": 25.0,\n    \"fats\": 15.0,\n    \"carbs\": 20.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/dishes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"dishes"
+					]
+				},
+				"description": "Добавляет новое блюдо в базу данных. Название блюда должно быть уникальным (регистр не учитывается).\n\n  \nОжидаемый ответ: объект блюда с сгенерированным ID.\n\nСтатус: 200 OK при успехе, 400 Bad Request при дубликате названия или некорректных данных."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Dish - Grilled Salmon",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Grilled Salmon\",\n    \"calories\": 400.0,\n    \"proteins\": 30.0,\n    \"fats\": 20.0,\n    \"carbs\": 5.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/dishes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"dishes"
+					]
+				},
+				"description": "Добавляет ещё одно блюдо в базу данных. Аналогично предыдущему запросу, проверяется уникальность названия.\n\n  \nОжидаемый ответ: объект блюда с сгенерированным ID.\n\nСтатус: 200 OK при успехе, 400 Bad Request при дубликате названия или некорректных данных."
+			},
+			"response": []
+		},
+		{
+			"name": "Add Meal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 1,\n    \"dishIds\": [1, 2],\n    \"dateTime\": \"2025-04-07T12:00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/meals",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"meals"
+					]
+				},
+				"description": "Регистрирует прием пищи для пользователя. Требует существующий userId и dishIds.\n\nОжидаемый ответ: объект приема пищи с информацией о пользователе и блюдах.\n\nСтатус: 200 OK при успехе, 404 Not Found если пользователь или блюда не найдены."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Daily Report",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/meals/daily/1?date=2025-04-07",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"meals",
+						"daily",
+						"1"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2025-04-07"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get History",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/meals/history/1?days=7",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"meals",
+						"history",
+						"1"
+					],
+					"query": [
+						{
+							"key": "days",
+							"value": "7"
+						}
+					]
+				},
+				"description": "Возвращает историю питания пользователя за последние N дней (параметр days).\n\n  \nОжидаемый ответ: список дневных отчетов с калориями и приемами пищи.\n\n  \nСтатус: 200 OK при успехе, 404 Not Found если пользователь не найден."
+			},
+			"response": []
+		},
+		{
+			"name": "Add Meal - Invalid User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 999,\n    \"dishIds\": [1],\n    \"dateTime\": \"2025-04-07T12:00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/meals",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"meals"
+					]
+				},
+				"description": "Тестирует обработку ошибки при попытке добавить прием пищи для несуществующего пользователя.\n\n  \nОжидаемый ответ: сообщение об ошибке с указанием, что пользователь не найден.\n\n  \nСтатус: 404 Not Found."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
